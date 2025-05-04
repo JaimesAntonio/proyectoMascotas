@@ -9,7 +9,7 @@ const stylesInputs: SxProps<Theme> ={
 
 export const RegisterPets = () => {
   const [formData, setFormData] = useState({ //manejo de variables como objeto 
-      name:"",
+      namepet:"",
       species:"",
       race:"",
       owner:"",
@@ -18,14 +18,7 @@ export const RegisterPets = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  //función para entada de datos
       e.preventDefault();
     };
-  
-    // const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {  //función para actualizar de datos
-    //   const {value, name} = e.target; //target se usa para acceder a las propiedades del objeto
-      
-    //   setFormData({...formData, [name]:value})
-
-    // };
-
+ 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
       const { name, value } = e.target;
       setFormData((prev) => ({
@@ -38,39 +31,39 @@ export const RegisterPets = () => {
     return (
       <> 
         <Stack
-          component="main" //define el comportamiento como etiqueta main
-          bgcolor="#D0DDD0"
+          component="main"
           height="100vh"
-          direction="row"
+            //direction="row"
           justifyContent="center" //alineación horizontal
           alignItems="center" //alineación vertical
-          sx= {{
-            backgroundImage: 'url("/dog_ini.png")',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            }}>
-            
+          >    
+           {/* <Link component={routerLink} to="/login">Go back</Link> */}
+            <Typography 
+              variant="h3" 
+              color="#727D73" 
+              fontWeight="500">
+                The Clinic
+            </Typography>
             <Stack
               component="form"
               bgcolor="#AAB99A"
-              maxHeight="60%"
+              maxHeight="75%"
               gap={1}
               p={4}
               borderRadius="12px"
-              marginLeft="1000px"
               onSubmit={handleSubmit}>
               <Link component={routerLink} to="/login">Go back</Link>
-              <Typography variant="h3" color="#727D73" fontWeight="500">
-                The Clinic
+              <Typography variant="h4" color="#727D73" fontWeight="500">
+                Register Pet
               </Typography>
-              
+            <Stack direction="row" gap={3}>
               <TextField 
-                  name="name" 
+                  name="namepet" 
                   label="Name:" 
                   type="text" 
                   variant="standard" 
                   required
-                  value={formData.name} 
+                  value={formData.namepet} 
                   sx={stylesInputs}
                   onChange={handleChange}/>
 
@@ -83,6 +76,7 @@ export const RegisterPets = () => {
                   value={formData.race} 
                   sx={stylesInputs}
                   onChange={handleChange}/>
+              </Stack>
 
                 <TextField 
                   name="owner" 
@@ -111,8 +105,7 @@ export const RegisterPets = () => {
                 <MenuItem value={"Other"}>Other</MenuItem>
                 </Select>
                 </FormControl>
-                
-
+    
                 <Button variant="outlined" type="submit" sx={{}}>Register</Button>
             </Stack>
         </Stack>

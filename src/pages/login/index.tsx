@@ -2,7 +2,7 @@
 
 import {Stack, SxProps, TextField, Theme, Typography, Button, Link} from '@mui/material';
 import React, { useState } from 'react';
-import {Link as routerLink} from "react-router-dom"
+import {Link as routerLink, useNavigate} from "react-router-dom"
 const stylesInputs: SxProps<Theme> ={
   '& .MuiInputLabel-standard': {'&.Mui-focused':{color:'#D0DDD0'},},
   '& .MuiInput-underline:after': { borderBottomColor: '#D0DDD0' }, // activo (focus)
@@ -15,10 +15,10 @@ export const Login = () => {
     login:"",
     password:"",
   });
-
+  const navigate =useNavigate();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  //función para entada de datos
     e.preventDefault();
-    alert("/dashboard");
+    navigate("/appointment")
     //const formData = new FormData(e.currentTarget); //formData es un objeto de clase FormData
     //alert(formData.get("login"));
   };
@@ -77,7 +77,7 @@ export const Login = () => {
               <Link component={routerLink} to="/register">Go to Register</Link>
               <Button variant="outlined" type="submit" sx={{}}>Sing in</Button>
           </Stack>
-      </Stack>
+       </Stack>
     </>
   );
 }

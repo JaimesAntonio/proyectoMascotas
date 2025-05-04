@@ -1,15 +1,15 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { AppBar, Box, Typography, Toolbar, IconButton, Button} from '@mui/material';
-import { Login, Register, RegisterPets } from './pages';
+import { Login, Register, RegisterPets, Appointment } from './pages';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components';
 
 
-  
+
+
 const App = () => {
- 
+
   return (
-    <> 
+    <>
       {/* <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{backgroundColor: '#F0F0D7'}}>
           <Toolbar>
@@ -32,13 +32,30 @@ const App = () => {
           </Toolbar>
         </AppBar>
       </Box> */}
-      
-      <Routes>
-        <Route path='/' element={<Navigate to="/login"/>}/>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/register" element={<Register />} />
-        <Route path="/registerpets" element={<RegisterPets />} />
-      </Routes>
+
+        {/* <Routes>
+          <Route path='/' element={<Navigate to="/login"/>}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register />} />
+
+        </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/registerpets" element={<RegisterPets />} />
+            <Route path="/appointment" element={<Appointment />} />
+          </Routes>
+        </Layout> */}
+    <Routes>
+      <Route path='/' element={<Navigate to="/login" />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+      <Route path='*' element={<Navigate to="/login" />} />
+      {/* Rutas dentro del layout */}
+      <Route path='/' element={<Layout />}>
+        <Route path='registerpets' element={<RegisterPets />} />
+        <Route path='appointment' element={<Appointment />} />
+      </Route>
+    </Routes>
     </>
   );
 }

@@ -74,16 +74,16 @@ export const Register = () => {
               <Typography variant="h3" color="#727D73" fontWeight="500">
                 The Clinic
               </Typography>
-              
-              <TextField 
-                  name="name" 
-                  label="Name:" 
-                  type="text" 
-                  variant="standard" 
-                  required
-                  value={formData.name} 
-                  sx={stylesInputs}
-                  onChange={handleChange}/>
+              <Stack direction="row" gap={3}>
+                <TextField 
+                    name="name" 
+                    label="Full Name:" 
+                    type="text" 
+                    variant="standard" 
+                    required
+                    value={formData.name} 
+                    sx={stylesInputs}
+                    onChange={handleChange}/>
 
                 <TextField 
                   name="nip" 
@@ -94,7 +94,8 @@ export const Register = () => {
                   value={formData.nip} 
                   sx={stylesInputs}
                   onChange={handleChange}/>  
-
+              </Stack>
+              <Stack direction="row" gap={3}>
                 <TextField 
                   name="email" 
                   label="Email:" 
@@ -105,6 +106,17 @@ export const Register = () => {
                   sx={stylesInputs}
                   onChange={handleChange}/>
 
+                <TextField
+                  name="phone" 
+                  label="Phone:" 
+                  type="nunmber" 
+                  variant="standard"
+                  required 
+                  value={formData.phone} 
+                  sx={stylesInputs}
+                  onChange={handleChange}/>
+              </Stack>
+              <Stack direction="row" gap={3}>
                 <TextField 
                   name="password" 
                   label="Password" 
@@ -114,8 +126,7 @@ export const Register = () => {
                   value={formData.password} 
                   sx={stylesInputs}
                   onChange={handleChange}/>
-                
-                <TextField 
+                <TextField
                   name="repassword" 
                   label="Confirm Password" 
                   type="password" 
@@ -123,18 +134,8 @@ export const Register = () => {
                   required 
                   value={formData.repassword} 
                   onChange={handleChange} 
-                  sx={stylesInputs}/>
-
-                <TextField 
-                  name="phone" 
-                  label="Phone:" 
-                  type="nunmber" 
-                  variant="standard"
-                  required 
-                  value={formData.phone} 
-                  sx={stylesInputs}
-                  onChange={handleChange}/>  
-
+                  sx={stylesInputs}/>  
+              </Stack>
                 <TextField 
                   name="adress" 
                   label="Adress" 
