@@ -2,9 +2,12 @@ import { Box, AppBar, Toolbar, IconButton, Typography, Button } from '@mui/mater
 import Stack from '@mui/material/Stack'
 import MenuIcon from '@mui/icons-material/Menu';
 import { FC, PropsWithChildren } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 export  const Layout: FC<PropsWithChildren> = ({children}) => {
+
+
+
   return (
     <>
      <Stack
@@ -33,13 +36,18 @@ export  const Layout: FC<PropsWithChildren> = ({children}) => {
             >
               <MenuIcon />
             </IconButton >
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#727D73' }}>
-              New Pet            </Typography>
+            <Typography variant="h6" sx={{ flexGrow: 1}}>
+              <Link to="/registerpets" style={{ textDecoration: 'none', color: '#727D73' }}>
+               New Pet
+              </Link>
+            </Typography>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#727D73' }}>
               Services
             </Typography>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#727D73' }}>
-              Appointment
+            <Typography variant="h6" sx={{ flexGrow: 1}}>
+              <Link to="/appointment" style={{ textDecoration: 'none', color: '#727D73' }}>
+               Appointment
+              </Link>
             </Typography>
             <Button sx={{color: 'black'}}>Register</Button>
           </Toolbar>

@@ -18,7 +18,7 @@ export const Login = () => {
   const navigate =useNavigate();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  //función para entada de datos
     e.preventDefault();
-    navigate("/appointment")
+    navigate("/ppal")
     //const formData = new FormData(e.currentTarget); //formData es un objeto de clase FormData
     //alert(formData.get("login"));
   };

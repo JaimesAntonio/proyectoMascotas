@@ -1,13 +1,15 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { Login, Register, RegisterPets, Appointment } from './pages';
+import { Login, Register, RegisterPets, Appointment, Ppal } from './pages';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components';
+import { FC, PropsWithChildren } from 'react';
+
 
 
 
 
 const App = () => {
-
+  localStorage.setItem("user", JSON.stringify({name: "usuario"}));
   return (
     <>
       {/* <Box sx={{ flexGrow: 1 }}>
@@ -33,18 +35,7 @@ const App = () => {
         </AppBar>
       </Box> */}
 
-        {/* <Routes>
-          <Route path='/' element={<Navigate to="/login"/>}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/register" element={<Register />} />
-
-        </Routes>
-        <Layout>
-          <Routes>
-            <Route path="/registerpets" element={<RegisterPets />} />
-            <Route path="/appointment" element={<Appointment />} />
-          </Routes>
-        </Layout> */}
+    
     <Routes>
       <Route path='/' element={<Navigate to="/login" />} />
       <Route path='/login' element={<Login />} />
@@ -52,12 +43,25 @@ const App = () => {
       <Route path='*' element={<Navigate to="/login" />} />
       {/* Rutas dentro del layout */}
       <Route path='/' element={<Layout />}>
-        <Route path='registerpets' element={<RegisterPets />} />
-        <Route path='appointment' element={<Appointment />} />
+        <Route path='registerpets' element={<ProtecterRouter><RegisterPets /></ProtecterRouter>} />
+        <Route path='appointment' element={<ProtecterRouter><Appointment /></ProtecterRouter>} />
+        <Route path='ppal' element={<ProtecterRouter><Ppal /></ProtecterRouter>} />
       </Route>
     </Routes>
     </>
   );
+};
+
+// Funtional Component para que se inicie login nsi no se ha logueado ningun usuario
+const ProtecterRouter: FC<PropsWithChildren> =({children})=>{
+  const userJson = localStorage.getItem("user")
+  if (userJson===null){
+    return <Navigate to="/login"/>
+  } else {
+    return children;
+  }
 }
+
+
 
 export default App
