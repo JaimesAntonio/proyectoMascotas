@@ -81,7 +81,7 @@ import { Stack } from '@mui/material';
 const pages = [
   {label:'New Pets', path: '/registerpets' },
   {label: 'Services', path:'/services'},
-  {label:'Apointment', path:'/apointment'}
+  {label:'Apointment', path:'/appointment'}
 ];
 
 const settings = [

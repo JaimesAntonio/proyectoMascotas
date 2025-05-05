@@ -26,7 +26,7 @@ export const Logout = () => {
                 variant="h3" 
                 color="#727D73" 
                 fontWeight="500">
-                The Clinic
+                Mascota Feliz
             </Typography> 
             
         </Stack>
