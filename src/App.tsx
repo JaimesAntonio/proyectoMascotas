@@ -1,5 +1,5 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { Login, Register, RegisterPets, Appointment, Ppal } from './pages';
+import { Login, Register, RegisterPets, Appointment, Ppal, Logout, Profile, Services } from './pages';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components';
 import { FC, PropsWithChildren } from 'react';
@@ -46,6 +46,9 @@ const App = () => {
         <Route path='registerpets' element={<ProtecterRouter><RegisterPets /></ProtecterRouter>} />
         <Route path='appointment' element={<ProtecterRouter><Appointment /></ProtecterRouter>} />
         <Route path='ppal' element={<ProtecterRouter><Ppal /></ProtecterRouter>} />
+        <Route path='services' element={<ProtecterRouter><Services /></ProtecterRouter>} />
+        <Route path='profile' element={<ProtecterRouter><Profile /></ProtecterRouter>} />
+        <Route path='logout' element={<ProtecterRouter><Logout /></ProtecterRouter>} />
       </Route>
     </Routes>
     </>
