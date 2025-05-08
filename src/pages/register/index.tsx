@@ -1,48 +1,68 @@
 import { Stack, Typography, TextField, Button, SxProps, Theme, Link } from '@mui/material';
 import React, { useState } from 'react'
-import {Link as routerLink} from "react-router-dom"
+import {Link as routerLink, useNavigate} from "react-router-dom"
 
 const stylesInputs: SxProps<Theme> ={
   '& .MuiInputLabel-standard': {'&.Mui-focused':{color:'#D0DDD0'},},
   '& .MuiInput-underline:after': { borderBottomColor: '#D0DDD0' }, // activo (focus)
   };
 
+interface ICustomer {
+  name:string;
+  nip:number | null;
+  email:string;
+  password:string;
+  repassword:string;
+  phone:number | null;
+  adress:string;
+  customerRol:number;
+}
+
 export const Register = () => {
-  const [formData, setFormData] = useState({ //manejo de variables como objeto 
+  const [formData, setFormData] = useState<ICustomer>({ //manejo de variables como objeto 
       name:"",
-      nip:"",
+      nip:null,
       email:"",
       password:"",
       repassword:"",
-      phone:"",
+      phone:null,
       adress:"",
+      customerRol:0,
     });
     
     const [error, setError] = useState("");
+    const navigate =useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  //función para entada de datos
       e.preventDefault();
-      // if (formData.password !== formData.repassword) {
-      //   setError("Passwords do not match");
-      //   return;
-      // }
-      //const formData = new FormData(e.currentTarget); //formData es un objeto de clase FormData
-      //alert(formData.get("login"));
-    };
-  
-    const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {  //función para actualizar de datos
-      const {value, name} = e.target; //target se usa para acceder a las propiedades del objeto
-      
-      setFormData({...formData, [name]:value})
-
+      alert(formData.password)
+      alert(formData.repassword)
       if (
-        name === "repassword" &&
         formData.password !== formData.repassword
       ) {
         setError("Passwords do not match");
       } else {
         setError("");
-      }
+        const customers = JSON.parse(localStorage.getItem('customer') || '[]');
+        customers.push(formData);
+        localStorage.setItem('customer', JSON.stringify(customers));
+        navigate("/login")
+      } 
+    };
+  
+    const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {  //función para actualizar de datos
+      const {name, value} = e.target; //target se usa para acceder a las propiedades del objeto
+      
+      setFormData({...formData, [name]:value})
+
+      // if (
+      //   name === "repassword" &&
+      //   formData.password !== formData.repassword
+      // ) {
+      //   setError("Passwords do not match");
+      // } else {
+      //   setError("");
+      // }
   
     };
   
@@ -144,7 +164,17 @@ export const Register = () => {
                   required 
                   value={formData.adress} 
                   sx={stylesInputs}
-                  onChange={handleChange}/>  
+                  onChange={handleChange}/> 
+                {/* Ocultar cuando ingrese vetrinario o cliente */}
+                <TextField 
+                  name="rol" 
+                  label="Rol" 
+                  type="test" 
+                  variant="standard"
+                  required 
+                  value={formData.customerRol} 
+                  sx={stylesInputs}
+                  onChange={handleChange}/>
 
                 {error.length > 0 && <Typography>{error}</Typography>}
                 <Button variant="outlined" type="submit" sx={{}}>Register</Button>

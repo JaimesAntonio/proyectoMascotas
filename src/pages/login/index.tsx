@@ -18,12 +18,25 @@ export const Login = () => {
   const navigate =useNavigate();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  //función para entada de datos
     e.preventDefault();
-    navigate("/ppal")
+    const customers = JSON.parse(localStorage.getItem('customer') || '[]');
+    console.log(customers);
+    const customer = customers.find(item => item.email===formData.login)
+    localStorage.setItem("userName", customer.name);
+    alert(customer.name);
+    if (!customer){
+      alert('Usuario no encontrado, debe registrase');
+      navigate("/register")
+    } else if (customer.password !==formData.password ){
+      alert('Incorrect Pasword', );
+    } else {
+      navigate("/ppal")
+    }
+    
     //const formData = new FormData(e.currentTarget); //formData es un objeto de clase FormData
     //alert(formData.get("login"));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {  //función para actualizar de datos
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {  //función para actualizar de datos
     const {value, name} = e.target; //target se usa para acceder a las propiedades del objeto
     setFormData({...formData, [name]:value})
   };

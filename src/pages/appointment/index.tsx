@@ -1,31 +1,50 @@
-import { Stack, Typography, TextField, Button, SxProps, Theme, Link, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Stack, Typography, TextField, Button, SxProps, Theme, Link, FormControl, InputLabel, MenuItem, Select, Alert } from '@mui/material';
 import React, { useState } from 'react'
-import {Link as routerLink} from "react-router-dom"
+import {Link as routerLink, useNavigate} from "react-router-dom"
 
 const stylesInputs: SxProps<Theme> ={
   '& .MuiInputLabel-standard': {'&.Mui-focused':{color:'#D0DDD0'},},
   '& .MuiInput-underline:after': { borderBottomColor: '#D0DDD0' }, // activo (focus)
   };
 
+interface IAppoint {
+  name:string;
+  email:string;
+  namepet:string;
+  reason:string;
+  phone:number | null;
+  notes:string;
+}
+
 export const Appointment = () => {
-  const [formData, setFormData] = useState({ //manejo de variables como objeto 
+  const [appointData, setAppointData] = useState<IAppoint>({ //manejo de variables como objeto 
       name:"",
-      nip:"",
       email:"",
       namepet:"",
       reason:"",
-      phone:"",
+      phone:null,
       notes:"",
     });
-
+    
+    const navigate =useNavigate();
+    const user = localStorage.getItem('userName');
+    const customers = JSON.parse(localStorage.getItem('customer') || '[]');
+    const customer = customers.find(item => item.name===user)
+    
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  //función para entada de datos
       e.preventDefault();
+
+      const appointments = JSON.parse(localStorage.getItem('appointment') || '[]');
+      appointments.push(appointData);
+      localStorage.setItem('appointment', JSON.stringify(appointments));
+      navigate("/login")  
+
     };
   
-    const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {  //función para actualizar de datos
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {  //función para actualizar de datos
       const {value, name} = e.target; //target se usa para acceder a las propiedades del objeto
       
-      setFormData({...formData, [name]:value})
+      setAppointData({...appointData, [name]:value})
 
     };
   
@@ -34,18 +53,19 @@ export const Appointment = () => {
         <Stack
           component="main" //define el comportamiento como etiqueta main
           //bgcolor="#D0DDD0"
-          height="100vh"
+          height="90vh"
           //direction="row"
-          justifyContent="center" //alineación horizontal
+         justifyContent="center" //alineación horizontal
           alignItems="center" //alineación vertical
           >
             <Typography 
                 variant="h3" 
                 color="#727D73" 
                 fontWeight="500">
-                The Clinic
+                Happy Pet Center
             </Typography> 
             <Stack
+              
               component="form"
               bgcolor="#AAB99A"
               maxHeight="75%"
@@ -64,7 +84,7 @@ export const Appointment = () => {
                     type="text" 
                     variant="standard" 
                     required
-                    value={formData.name} 
+                    value={customer.name} 
                     sx={stylesInputs}
                     onChange={handleChange}/>
 
@@ -74,7 +94,7 @@ export const Appointment = () => {
                     type="email" 
                     variant="standard" 
                     required
-                    value={formData.nip} 
+                    value={customer.email} 
                     sx={stylesInputs}
                     onChange={handleChange}/>  
                 </Stack>
@@ -85,7 +105,7 @@ export const Appointment = () => {
                     type="nunmber" 
                     variant="standard"
                     required 
-                    value={formData.email} 
+                    value={customer.phone} 
                     sx={stylesInputs}
                     onChange={handleChange}/>
 
@@ -95,7 +115,7 @@ export const Appointment = () => {
                     type="test"  
                     variant="standard"
                     required 
-                    value={formData.namepet} 
+                    value={customer.name } 
                     sx={stylesInputs}
                     onChange={handleChange}/>
                 </Stack>
@@ -106,7 +126,7 @@ export const Appointment = () => {
                 name="reason"
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={formData.reason}
+                value={appointData.reason}
                 label="species"
                 onChange={handleChange}
                 >
@@ -118,14 +138,13 @@ export const Appointment = () => {
                 
                 </Select>
                 </FormControl>
-
                 <TextField 
                   name="notes" 
                   label="Notes" 
                   type="text" 
                   variant="standard"
                   required 
-                  value={formData.adress} 
+                  value={appointData.notes} 
                   sx={stylesInputs}
                   onChange={handleChange}/>  
 

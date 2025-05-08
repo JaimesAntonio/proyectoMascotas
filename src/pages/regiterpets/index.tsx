@@ -1,22 +1,56 @@
 import { Stack, Typography, TextField, Button, SxProps, Theme, Link, speedDialActionClasses, InputLabel, MenuItem, Select, FormControl } from '@mui/material';
 import React, { useState } from 'react'
-import {Link as routerLink} from "react-router-dom"
+import {Link as routerLink, useNavigate} from "react-router-dom"
 
 const stylesInputs: SxProps<Theme> ={
   '& .MuiInputLabel-standard': {'&.Mui-focused':{color:'#D0DDD0'},},
   '& .MuiInput-underline:after': { borderBottomColor: '#D0DDD0' }, // activo (focus)
   };
+interface Pet {
+  namepet:string; 
+  species:string;
+  race:string;
+  owner:string;
+}
+
+// interface Customer {
+//   name:string;
+//   nip:number | null;
+//   email:string;
+//   password:string;
+//   repassword:string;
+//   phone:number | null;
+//   adress:string;
+// }
 
 export const RegisterPets = () => {
-  const [formData, setFormData] = useState({ //manejo de variables como objeto 
+  const [formData, setFormData] = useState<Pet>({ //manejo de variables como objeto 
       namepet:"",
       species:"",
       race:"",
       owner:"",
     });
-    
+
+  // const [customerData, setcustomerData] = useState<Customer>({ //manejo de variables como objeto 
+  //       name:"",
+  //       nip:null,
+  //       email:"",
+  //       password:"",
+  //       repassword:"",
+  //       phone:null,
+  //       adress:"",
+  //     });
+
+  const navigate =useNavigate();
+  const customers = JSON.parse(localStorage.getItem('customer') || '[]');
+  console.log(customers);
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {  //función para entada de datos
       e.preventDefault();
+
+      const pets = JSON.parse(localStorage.getItem('pet') || '[]');
+      pets.push(formData);
+      localStorage.setItem('pet', JSON.stringify(pets));
+      navigate("/ppal")
     };
  
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
@@ -78,15 +112,14 @@ export const RegisterPets = () => {
                   onChange={handleChange}/>
               </Stack>
 
-                <TextField 
-                  name="owner" 
-                  label="Owner" 
-                  type="text"  
-                  variant="standard"
-                  required 
-                  value={formData.owner} 
-                  sx={stylesInputs}
-                  onChange={handleChange}/>
+              <select name="owner" value={formData.owner} onChange={handleChange}>
+                <option value="">Seleccionar dueño</option>
+                  {customers.map((customerData, index) => (
+                    <option key={index} value={customerData.name}>
+                    {customerData.name}
+                      </option>
+                ))}
+              </select>
                 
                 <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Species</InputLabel>
